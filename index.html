@@ -137,7 +137,9 @@ button{font-family:inherit;cursor:pointer}
 }
 .hero-scrim{
   position:absolute; inset:0;
-  background:linear-gradient(180deg, rgba(128,64,31,.30) 0%, rgba(128,64,31,.10) 35%, rgba(128,64,31,.55) 100%);
+  background:
+    radial-gradient(70% 45% at 50% 42%, rgba(80,40,20,.42) 0%, rgba(80,40,20,0) 70%),
+    linear-gradient(180deg, rgba(128,64,31,.28) 0%, rgba(128,64,31,.08) 35%, rgba(128,64,31,.55) 100%);
 }
 .hero-logo{
   position:absolute; inset:0; z-index:2;
@@ -145,25 +147,23 @@ button{font-family:inherit;cursor:pointer}
   text-align:center; padding:2rem;
 }
 .logo-card{
-  padding:2.4rem 2rem 2.6rem;
-  background:rgba(248,240,233,.14);
-  border:1px solid rgba(248,240,233,.55);
-  backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px);
-  box-shadow:0 8px 40px rgba(128,64,31,.25);
+  padding:0; background:transparent; border:none; box-shadow:none;
 }
 .logo-pre{
   font-size:.66rem; letter-spacing:.4em; text-transform:uppercase;
   color:var(--marfil); padding-left:.4em; margin-bottom:.4rem;
+  text-shadow:0 2px 14px rgba(0,0,0,.55);
 }
 .logo-name{
   font-family:var(--f-nombre); font-size:4.8rem; line-height:.85;
   color:var(--marfil); text-shadow:0 4px 26px rgba(0,0,0,.4);
 }
-.logo-xvrow{display:flex; align-items:center; justify-content:center; gap:.9rem; margin-top:.7rem}
-.logo-xvrow .l{width:40px; height:1px; background:var(--dorado)}
+.logo-xvrow{display:flex; align-items:center; justify-content:center; gap:.9rem; margin-top:.7rem; white-space:nowrap}
+.logo-xvrow .l{width:40px; height:1px; background:var(--dorado); flex:none}
 .logo-xv{
   font-family:var(--f-titulo); font-weight:600; font-size:1.7rem;
-  letter-spacing:.4em; padding-left:.4em; color:var(--dorado);
+  letter-spacing:.34em; padding-left:.34em; color:var(--dorado); white-space:nowrap;
+  text-shadow:0 2px 14px rgba(0,0,0,.5);
 }
 /* Antifaz flotante (sube y baja) */
 .mask-float{
