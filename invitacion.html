@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>XV Años — Luciana</title>
+
+<!-- ÚNICA DEPENDENCIA: Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   PALETA (según tu tabla)
+   ============================================================ */
+:root{
+  --rosa-principal:#DFA07F;  /* rosa empolvado */
+  --rosa-nude:#E8B49D;       /* rosa nude claro */
+  --champagne:#F2CDBB;       /* rosa champagne */
+  --terracota:#C47F68;       /* terracota rosado (botones) */
+  --cafe:#80401F;            /* café terracota oscuro (texto/títulos) */
+  --dorado:#C69A63;          /* dorado champagne (líneas/ornamentos) */
+  --marfil:#F8F0E9;          /* marfil cálido (texto claro / fondos) */
+
+  --col:480px;               /* ancho máx. de la columna tipo celular */
+
+  --f-titulo:'Cormorant Garamond', serif;
+  --f-nombre:'Pinyon Script', cursive;
+  --f-texto:'Montserrat', sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+
+body{
+  font-family:var(--f-texto);
+  color:var(--cafe);
+  /* Fondo del "escenario" (fuera de la columna, visible en escritorio) */
+  background:
+     radial-gradient(120% 80% at 50% 0%, #f6e6da 0%, var(--rosa-principal) 60%, var(--terracota) 100%);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+body.locked{overflow:hidden}          /* bloquea scroll durante la intro */
+img{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer}
+
+/* ============================================================
+   COLUMNA TIPO CELULAR
+   ============================================================ */
+.phone{
+  position:relative;
+  width:100%;
+  max-width:var(--col);
+  margin:0 auto;
+  min-height:100dvh;
+  background:var(--marfil);
+  overflow:hidden;               /* para carruseles y parallax */
+  box-shadow:0 0 60px rgba(128,64,31,.35);
+}
+
+/* ============================================================
+   INTRO (portada + video)
+   ============================================================ */
+#intro{
+  position:fixed; inset:0; z-index:9999;
+  display:flex; justify-content:center; align-items:center;
+  background:var(--cafe);
+  transition:opacity .8s ease;
+}
+#intro.hide{opacity:0; pointer-events:none}
+.intro-inner{
+  position:relative;
+  width:100%; max-width:var(--col);
+  height:100dvh;
+  overflow:hidden;
+  background:#000;
+}
+#video{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  background:#000;
+}
+
+/* Portada elegante "Toca para comenzar" */
+#cover{
+  position:absolute; inset:0; z-index:5;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  text-align:center; padding:2rem;
+  background:
+    linear-gradient(180deg, rgba(128,64,31,.45), rgba(128,64,31,.30) 45%, rgba(128,64,31,.65)),
+    center/cover no-repeat url('imagen fija heros.png');
+  transition:opacity .7s ease;
+}
+#cover.hide{opacity:0; pointer-events:none}
+.cover-sello{color:var(--marfil)}
+.cover-pre{
+  font-size:.72rem; letter-spacing:.42em; text-transform:uppercase;
+  color:var(--champagne); margin-bottom:1rem; padding-left:.42em;
+}
+.cover-name{
+  font-family:var(--f-nombre);
+  font-size:4.6rem; line-height:.9; color:var(--marfil);
+  text-shadow:0 3px 24px rgba(0,0,0,.35);
+}
+.cover-xv{
+  font-family:var(--f-titulo); font-weight:500;
+  font-size:1.5rem; letter-spacing:.5em; padding-left:.5em;
+  color:var(--dorado); margin-top:.4rem;
+}
+.orn{display:flex; align-items:center; justify-content:center; gap:.7rem; margin:1.4rem 0}
+.orn .line{width:52px; height:1px; background:var(--dorado); opacity:.9}
+.orn .dot{width:6px; height:6px; border:1px solid var(--dorado); transform:rotate(45deg)}
+.tap-btn{
+  margin-top:2.2rem;
+  background:transparent; color:var(--marfil);
+  border:1px solid var(--dorado);
+  padding:.85rem 1.9rem; border-radius:40px;
+  font-size:.74rem; letter-spacing:.28em; text-transform:uppercase;
+  padding-left:calc(.28em + 1.9rem);
+  animation:pulse 2.4s ease-in-out infinite;
+  transition:background .3s, color .3s;
+}
+.tap-btn:hover{background:var(--dorado); color:var(--cafe)}
+.cover-hint{margin-top:1.1rem; font-size:.62rem; letter-spacing:.2em; color:var(--champagne); opacity:.85}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(198,154,99,.5)}50%{box-shadow:0 0 0 12px rgba(198,154,99,0)}}
+
+/* ============================================================
+   HERO (imagen fija + logo)
+   ============================================================ */
+.hero{position:relative; height:100dvh; overflow:hidden}
+.hero-bg{
+  position:absolute; inset:-4% 0;
+  background:center/cover no-repeat url('imagen fija heros.png');
+  will-change:transform;
+}
+.hero-scrim{
+  position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(128,64,31,.30) 0%, rgba(128,64,31,.10) 35%, rgba(128,64,31,.55) 100%);
+}
+.hero-logo{
+  position:absolute; inset:0; z-index:2;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  text-align:center; padding:2rem;
+}
+.logo-card{
+  padding:2.4rem 2rem 2.6rem;
+  background:rgba(248,240,233,.14);
+  border:1px solid rgba(248,240,233,.55);
+  backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px);
+  box-shadow:0 8px 40px rgba(128,64,31,.25);
+}
+.logo-pre{
+  font-size:.66rem; letter-spacing:.4em; text-transform:uppercase;
+  color:var(--marfil); padding-left:.4em; margin-bottom:.4rem;
+}
+.logo-name{
+  font-family:var(--f-nombre); font-size:4.8rem; line-height:.85;
+  color:var(--marfil); text-shadow:0 4px 26px rgba(0,0,0,.4);
+}
+.logo-xvrow{display:flex; align-items:center; justify-content:center; gap:.9rem; margin-top:.7rem}
+.logo-xvrow .l{width:40px; height:1px; background:var(--dorado)}
+.logo-xv{
+  font-family:var(--f-titulo); font-weight:600; font-size:1.7rem;
+  letter-spacing:.4em; padding-left:.4em; color:var(--dorado);
+}
+.scroll-cue{
+  position:absolute; bottom:1.4rem; left:50%; transform:translateX(-50%);
+  z-index:3; color:var(--marfil); font-size:.6rem; letter-spacing:.3em; text-transform:uppercase;
+  opacity:.85; animation:bob 2s ease-in-out infinite; text-align:center;
+}
+.scroll-cue span{display:block; font-size:1.1rem; margin-top:.2rem}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* ============================================================
+   MARQUEE (carrusel infinito de palabras)
+   ============================================================ */
+.marquee{overflow:hidden; white-space:nowrap; background:var(--cafe); padding:.85rem 0}
+.marquee-track{display:inline-flex; align-items:center; width:max-content; animation:scrollL 24s linear infinite}
+.marquee-track .it{
+  font-family:var(--f-titulo); font-style:italic; font-weight:500;
+  font-size:1.5rem; color:var(--champagne); padding:0 1.1rem;
+}
+.marquee-track .sep{color:var(--dorado); font-size:.9rem}
+@keyframes scrollL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ============================================================
+   SECCIONES
+   ============================================================ */
+.sec{padding:4rem 1.9rem; text-align:center; position:relative}
+.sec.alt{background:var(--champagne)}
+.sec.tinta{background:var(--rosa-principal); color:var(--marfil)}
+.eyebrow{
+  font-size:.66rem; letter-spacing:.4em; text-transform:uppercase;
+  color:var(--dorado); padding-left:.4em; margin-bottom:1.2rem;
+}
+.sec.tinta .eyebrow{color:var(--marfil)}
+.titulo{font-family:var(--f-titulo); font-weight:500; font-size:2.3rem; line-height:1.15}
+.frase{
+  font-family:var(--f-titulo); font-weight:400; font-size:1.42rem; line-height:1.7;
+  max-width:24rem; margin:0 auto;
+}
+.frase em{font-style:italic; color:var(--terracota)}
+.sec.tinta .frase em{color:var(--champagne)}
+
+/* Divisor ornamental */
+.divisor{display:flex; align-items:center; justify-content:center; gap:.8rem; margin:1.6rem auto}
+.divisor .line{width:60px; height:1px; background:var(--dorado)}
+.divisor .dia{width:7px; height:7px; border:1px solid var(--dorado); transform:rotate(45deg)}
+.sec.tinta .divisor .line, .sec.tinta .divisor .dia{background:var(--marfil); border-color:var(--marfil)}
+
+/* Fecha / Hora */
+.fecha-num{font-family:var(--f-titulo); font-weight:600; font-size:4.6rem; line-height:1; color:var(--terracota)}
+.fecha-mes{font-size:.8rem; letter-spacing:.44em; text-transform:uppercase; padding-left:.44em; margin-top:.6rem}
+.fecha-anio{font-family:var(--f-titulo); font-size:1.5rem; margin-top:.2rem; color:var(--dorado)}
+.hora-big{font-family:var(--f-titulo); font-weight:500; font-size:3rem; color:var(--terracota)}
+
+/* Cuenta regresiva */
+.count{display:flex; justify-content:center; gap:.6rem; margin-top:.6rem}
+.count .box{
+  flex:1; max-width:5rem; padding:1rem .4rem;
+  border:1px solid var(--dorado); background:rgba(248,240,233,.5);
+}
+.sec.tinta .count .box{background:rgba(248,240,233,.16); border-color:var(--marfil)}
+.count .n{font-family:var(--f-titulo); font-weight:600; font-size:2.1rem; line-height:1; color:var(--cafe)}
+.sec.tinta .count .n{color:var(--marfil)}
+.count .l{font-size:.52rem; letter-spacing:.18em; text-transform:uppercase; margin-top:.45rem; opacity:.85}
+
+/* Ubicación / botones */
+.lugar-nombre{font-family:var(--f-titulo); font-weight:500; font-size:1.9rem; margin-bottom:.4rem}
+.lugar-dir{font-size:.92rem; line-height:1.6; max-width:20rem; margin:0 auto 1.6rem; opacity:.9}
+.btn{
+  display:inline-block; background:var(--terracota); color:var(--marfil);
+  border:none; padding:.95rem 2rem; border-radius:40px;
+  font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; padding-left:calc(.22em + 2rem);
+  text-decoration:none; transition:transform .25s, box-shadow .25s, background .25s;
+  box-shadow:0 6px 18px rgba(128,64,31,.28);
+}
+.btn:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(128,64,31,.35)}
+.btn.ghost{background:transparent; color:var(--cafe); border:1px solid var(--dorado); box-shadow:none}
+.btn.ghost:hover{background:var(--dorado); color:var(--marfil)}
+.btn-row{display:flex; flex-direction:column; gap:.8rem; align-items:center}
+
+/* ============================================================
+   GALERÍA (carrusel infinito de fotos)
+   ============================================================ */
+.galeria{background:var(--marfil); padding:3rem 0 3.4rem}
+.gal-track-wrap{overflow:hidden}
+.gal-track{display:flex; width:max-content; gap:1rem; padding:0 .5rem; animation:scrollL 40s linear infinite}
+.gal-item{
+  width:15rem; height:19rem; flex:none;
+  border:1px solid var(--dorado); background:var(--champagne);
+  overflow:hidden; position:relative;
+}
+.gal-item img{width:100%; height:100%; object-fit:cover}
+.gal-ph{
+  width:100%; height:100%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  color:var(--terracota); background:linear-gradient(135deg, var(--champagne), var(--rosa-nude));
+}
+.gal-ph .mono{font-family:var(--f-nombre); font-size:2.6rem; opacity:.7}
+.gal-ph .t{font-size:.58rem; letter-spacing:.24em; text-transform:uppercase; margin-top:.3rem; opacity:.7}
+
+/* ============================================================
+   RSVP
+   ============================================================ */
+.rsvp{background:var(--rosa-principal); color:var(--marfil)}
+.form-card{
+  max-width:22rem; margin:1.4rem auto 0; text-align:left;
+  background:rgba(248,240,233,.14); border:1px solid rgba(248,240,233,.4);
+  padding:1.8rem 1.5rem; backdrop-filter:blur(2px);
+}
+.campo{margin-bottom:1.3rem}
+.campo label{display:block; font-size:.6rem; letter-spacing:.24em; text-transform:uppercase; margin-bottom:.55rem; color:var(--marfil)}
+.campo input[type=text]{
+  width:100%; background:transparent; border:none; border-bottom:1px solid var(--marfil);
+  color:var(--marfil); font-family:var(--f-titulo); font-size:1.3rem; padding:.4rem 0; outline:none;
+}
+.campo input::placeholder{color:rgba(248,240,233,.5)}
+.attend{display:flex; flex-direction:column; gap:.6rem}
+.attend-btn{
+  background:transparent; border:1px solid var(--marfil); color:var(--marfil);
+  padding:.8rem 1rem; font-size:.66rem; letter-spacing:.14em; text-transform:uppercase;
+  transition:background .25s, color .25s;
+}
+.attend-btn.active{background:var(--marfil); color:var(--cafe); font-weight:600}
+#cantidadBlock{overflow:hidden; max-height:0; opacity:0; transition:max-height .45s ease, opacity .45s ease, margin .45s}
+#cantidadBlock.open{max-height:260px; opacity:1}
+.cant-row{display:flex; gap:1rem}
+.cant-col{flex:1; text-align:center}
+.stepper{display:flex; align-items:center; justify-content:center; gap:.7rem; margin-top:.5rem}
+.step-btn{
+  width:2.2rem; height:2.2rem; border:1px solid var(--marfil); background:transparent;
+  color:var(--marfil); font-size:1.2rem; line-height:1; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+.step-btn:active{background:var(--marfil); color:var(--cafe)}
+.step-val{font-family:var(--f-titulo); font-size:1.9rem; min-width:1.8rem; text-align:center}
+.enviar{width:100%; margin-top:1.6rem; background:var(--cafe); color:var(--marfil)}
+.enviar:hover{background:#5f2f14}
+.form-nota{font-size:.58rem; text-align:center; margin-top:.9rem; opacity:.75; letter-spacing:.08em}
+
+/* ============================================================
+   FINAL
+   ============================================================ */
+.final{background:var(--cafe); color:var(--marfil); padding:5rem 1.9rem}
+.final .titulo{color:var(--marfil)}
+.final .frase{color:var(--champagne)}
+.final-name{font-family:var(--f-nombre); font-size:3.4rem; color:var(--dorado); margin-top:1rem}
+
+/* ============================================================
+   BOTÓN DE MÚSICA (fijo)
+   ============================================================ */
+#musicBtn{
+  position:fixed; z-index:9000; bottom:1.1rem;
+  left:50%; margin-left:calc(var(--col)/2 - 3.5rem);  /* pegado al borde derecho de la columna */
+  width:2.9rem; height:2.9rem; border-radius:50%;
+  background:var(--terracota); color:var(--marfil); border:1px solid var(--dorado);
+  display:none; align-items:center; justify-content:center;
+  box-shadow:0 6px 18px rgba(128,64,31,.4);
+}
+@media(max-width:520px){#musicBtn{left:auto; right:1rem; margin-left:0}}
+#musicBtn svg{width:1.2rem; height:1.2rem}
+#musicBtn.spin svg{animation:rot 4s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* ============================================================
+   PARTÍCULAS (destellos dorados sutiles)
+   ============================================================ */
+#particles{position:absolute; inset:0; z-index:6; pointer-events:none; overflow:hidden}
+.spark{
+  position:absolute; top:-5%;
+  width:6px; height:6px; border-radius:50%;
+  background:radial-gradient(circle, var(--dorado), rgba(198,154,99,0));
+  opacity:0; animation:fall linear infinite;
+}
+@keyframes fall{
+  0%{transform:translateY(0) scale(.6); opacity:0}
+  10%{opacity:.9}
+  90%{opacity:.5}
+  100%{transform:translateY(108dvh) scale(1); opacity:0}
+}
+
+/* ============================================================
+   ANIMACIONES DE APARICIÓN (scroll reveal)
+   ============================================================ */
+.reveal{opacity:0; transform:translateY(28px); transition:opacity 1s ease, transform 1s ease}
+.reveal.in{opacity:1; transform:none}
+.hero-logo{opacity:0; transform:scale(.96); transition:opacity 1.2s ease .2s, transform 1.4s ease .2s}
+.hero.show .hero-logo{opacity:1; transform:none}
+</style>
+</head>
+<body class="locked">
+
+<div class="phone" id="app">
+
+  <!-- ===================== INTRO ===================== -->
+  <div id="intro">
+    <div class="intro-inner">
+      <video id="video" muted playsinline preload="auto">
+        <source src="video abertura.mp4" type="video/mp4">
+      </video>
+      <div id="cover">
+        <div class="cover-sello">
+          <p class="cover-pre" data-k="introPre"></p>
+          <h1 class="cover-name" data-k="nombre"></h1>
+          <div class="cover-xv">XV AÑOS</div>
+          <div class="orn"><span class="line"></span><span class="dot"></span><span class="line"></span></div>
+        </div>
+        <button class="tap-btn" id="tapBtn" data-k="tapTexto"></button>
+        <p class="cover-hint" data-k="tapHint"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero" id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-scrim"></div>
+    <div class="hero-logo">
+      <div class="logo-card">
+        <p class="logo-pre" data-k="introPre"></p>
+        <div class="logo-name" data-k="nombre"></div>
+        <div class="logo-xvrow"><span class="l"></span><span class="logo-xv">XV</span><span class="l"></span></div>
+      </div>
+    </div>
+    <div class="scroll-cue">Desliza<span>&#8964;</span></div>
+    <div id="particles"></div>
+  </header>
+
+  <!-- ===================== MARQUEE PALABRAS ===================== -->
+  <div class="marquee"><div class="marquee-track" id="marqueeWords"></div></div>
+
+  <!-- ===================== INVITACIÓN ===================== -->
+  <section class="sec">
+    <p class="eyebrow reveal">Con cariño</p>
+    <p class="frase reveal" data-k="fraseInvitacion"></p>
+    <div class="divisor reveal"><span class="line"></span><span class="dia"></span><span class="line"></span></div>
+  </section>
+
+  <!-- ===================== FECHA ===================== -->
+  <section class="sec alt">
+    <p class="eyebrow reveal">Reserva la fecha</p>
+    <div class="fecha-num reveal" data-k="fechaDia"></div>
+    <div class="fecha-mes reveal" data-k="fechaMes"></div>
+    <div class="fecha-anio reveal" data-k="fechaAnio"></div>
+  </section>
+
+  <!-- ===================== HORA ===================== -->
+  <section class="sec">
+    <p class="eyebrow reveal">A partir de las</p>
+    <div class="hora-big reveal" data-k="hora"></div>
+  </section>
+
+  <!-- ===================== CUENTA REGRESIVA ===================== -->
+  <section class="sec tinta">
+    <p class="eyebrow reveal">Falta poco</p>
+    <div class="count reveal" id="countdown">
+      <div class="box"><div class="n" id="cd-d">--</div><div class="l">Días</div></div>
+      <div class="box"><div class="n" id="cd-h">--</div><div class="l">Horas</div></div>
+      <div class="box"><div class="n" id="cd-m">--</div><div class="l">Min</div></div>
+      <div class="box"><div class="n" id="cd-s">--</div><div class="l">Seg</div></div>
+    </div>
+  </section>
+
+  <!-- ===================== UBICACIÓN ===================== -->
+  <section class="sec alt">
+    <p class="eyebrow reveal">Te esperamos en</p>
+    <div class="lugar-nombre reveal" data-k="lugar"></div>
+    <p class="lugar-dir reveal" data-k="direccion"></p>
+    <div class="btn-row reveal">
+      <a class="btn" id="mapsBtn" target="_blank" rel="noopener">Abrir en Maps</a>
+      <a class="btn ghost" id="calBtn" target="_blank" rel="noopener">Añadir al calendario</a>
+    </div>
+  </section>
+
+  <!-- ===================== GALERÍA (carrusel de fotos) ===================== -->
+  <div class="galeria">
+    <p class="eyebrow reveal" style="text-align:center">Recuerdos</p>
+    <div class="gal-track-wrap"><div class="gal-track" id="galTrack"></div></div>
+  </div>
+
+  <!-- ===================== RSVP ===================== -->
+  <section class="sec rsvp">
+    <p class="eyebrow reveal">Confirma tu asistencia</p>
+    <p class="frase reveal" style="font-size:1.2rem">Tu presencia es el mejor regalo</p>
+    <div class="form-card reveal">
+      <div class="campo">
+        <label>Tu nombre</label>
+        <input type="text" id="fNombre" placeholder="Escribe tu nombre">
+      </div>
+      <div class="campo">
+        <label>¿Nos acompañarás?</label>
+        <div class="attend">
+          <button type="button" class="attend-btn" data-val="si">Sí, ahí estaré</button>
+          <button type="button" class="attend-btn" data-val="no">Lo siento, no podré asistir</button>
+        </div>
+      </div>
+      <div id="cantidadBlock">
+        <div class="campo" style="margin-bottom:.4rem"><label>¿Cuántos asistirán? (incluyéndote)</label></div>
+        <div class="cant-row">
+          <div class="cant-col">
+            <span style="font-size:.58rem; letter-spacing:.18em; text-transform:uppercase">Adultos</span>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-t="adultos" data-a="-1">&minus;</button>
+              <span class="step-val" id="vAdultos">1</span>
+              <button type="button" class="step-btn" data-t="adultos" data-a="1">+</button>
+            </div>
+          </div>
+          <div class="cant-col">
+            <span style="font-size:.58rem; letter-spacing:.18em; text-transform:uppercase">Niños</span>
+            <div class="stepper">
+              <button type="button" class="step-btn" data-t="ninos" data-a="-1">&minus;</button>
+              <span class="step-val" id="vNinos">0</span>
+              <button type="button" class="step-btn" data-t="ninos" data-a="1">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn enviar" id="enviarBtn">Enviar por WhatsApp</button>
+      <p class="form-nota">Se abrirá WhatsApp con tu confirmación lista para enviar.</p>
+    </div>
+  </section>
+
+  <!-- ===================== FINAL ===================== -->
+  <section class="final" style="text-align:center">
+    <div class="divisor reveal"><span class="line"></span><span class="dia"></span><span class="line"></span></div>
+    <p class="titulo reveal" data-k="fraseFinal"></p>
+    <div class="final-name reveal" data-k="nombre"></div>
+  </section>
+
+  <!-- Botón de música -->
+  <button id="musicBtn" title="Música">
+    <svg id="musicIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
+  </button>
+  <audio id="audio" loop preload="auto" data-k-src="musica"></audio>
+
+</div>
+
+<script>
+/* ============================================================================
+   ██  DATOS  ██   —  EDITA AQUÍ TODO. No necesitas tocar el diseño.
+   ============================================================================ */
+const DATOS = {
+
+  /* --- Quinceañera --- */
+  nombre: "Luciana",                       // Nombre que aparece grande
+  introPre: "Mis quince años",             // Frase corta sobre el nombre (portada/hero)
+
+  /* --- Textos --- */
+  fraseInvitacion: "Con la bendición de Dios y de mis padres, tengo el honor de invitarte a compartir <em>una noche inolvidable</em>. Será un sueño hecho realidad… y quiero vivirlo contigo.",
+  fraseFinal: "Te esperamos",
+
+  /* --- Fecha y hora --- */
+  fechaDia:  "21",                         // Número del día (grande)
+  fechaMes:  "Agosto",                     // Mes en texto
+  fechaAnio: "2026",                       // Año
+  hora:      "20:00 hrs",                  // Hora en texto
+  // Fecha/hora EXACTA para la cuenta regresiva (formato: AÑO-MES-DÍAThora:min:seg)
+  fechaISO:  "2026-08-21T20:00:00",
+
+  /* --- Ubicación --- */
+  lugar:     "Salón Emperador",
+  direccion: "Calle Tucumán, Av. Beni #55",
+  mapsUrl:   "https://maps.app.goo.gl/yHtbmzSKFWQU3BYGA",
+
+  /* --- WhatsApp (con código de país; se limpian espacios y símbolos solos) --- */
+  whatsapp:  "+55 81 9138-5629",
+
+  /* --- Música (coloca el archivo .mp3 en esta misma carpeta) --- */
+  musica:    "HUMBE - fantasmas.mp3",
+
+  /* --- Galería de fotos (carrusel). Coloca las fotos en la carpeta y escribe
+         sus nombres aquí, ej.: ["foto1.jpg","foto2.jpg"]. Si lo dejas vacío []
+         se muestran marcos elegantes de relleno. --- */
+  galeria: [],
+
+  /* --- Textos de la portada inicial --- */
+  tapTexto: "Toca para comenzar",
+  tapHint:  "Con música ♪",
+
+  /* --- Cuántos marcos de relleno mostrar en la galería si está vacía --- */
+  placeholdersGaleria: 6,
+
+  /* --- Video: cuántos ms esperar como máximo por si el evento 'ended' no
+         dispara (respaldo). Se ajusta solo con la duración real del video. --- */
+  videoFallbackMs: 20000
+};
+
+/* ============================================================================
+   Motor de la invitación (no necesitas editar debajo de aquí)
+   ============================================================================ */
+(function(){
+  const $ = s => document.querySelector(s);
+  const $$ = s => document.querySelectorAll(s);
+
+  /* ---- Inyectar textos de DATOS ---- */
+  $$('[data-k]').forEach(el=>{
+    const v = DATOS[el.getAttribute('data-k')];
+    if(v!=null) el.innerHTML = v;
+  });
+  const audio = $('#audio');
+  audio.src = DATOS.musica;
+
+  /* ---- Botones de Maps / Calendario ---- */
+  $('#mapsBtn').href = DATOS.mapsUrl;
+  (function(){
+    const d = new Date(DATOS.fechaISO);
+    const end = new Date(d.getTime() + 6*3600*1000); // +6 h de evento
+    const fmt = x => x.getFullYear()
+      + String(x.getMonth()+1).padStart(2,'0')
+      + String(x.getDate()).padStart(2,'0') + 'T'
+      + String(x.getHours()).padStart(2,'0')
+      + String(x.getMinutes()).padStart(2,'0') + '00';
+    const url = 'https://calendar.google.com/calendar/render?action=TEMPLATE'
+      + '&text=' + encodeURIComponent('XV Años de ' + DATOS.nombre)
+      + '&dates=' + fmt(d) + '/' + fmt(end)
+      + '&location=' + encodeURIComponent(DATOS.lugar + ', ' + DATOS.direccion)
+      + '&details=' + encodeURIComponent('¡Te esperamos para celebrar!');
+    $('#calBtn').href = url;
+  })();
+
+  /* ---- Marquee de palabras (Luciana ✦ XV ✦ …) ---- */
+  (function(){
+    const track = $('#marqueeWords');
+    const unidad = [DATOS.nombre, 'XV'];
+    let html='';
+    for(let i=0;i<8;i++){
+      unidad.forEach(w=>{ html += '<span class="it">'+w+'</span><span class="sep">&#10022;</span>'; });
+    }
+    track.innerHTML = html + html; // duplicado para loop continuo
+  })();
+
+  /* ---- Galería (carrusel de fotos) ---- */
+  (function(){
+    const track = $('#galTrack');
+    let items='';
+    if(DATOS.galeria && DATOS.galeria.length){
+      DATOS.galeria.forEach(src=>{ items += '<div class="gal-item"><img src="'+src+'" alt=""></div>'; });
+    }else{
+      for(let i=0;i<DATOS.placeholdersGaleria;i++){
+        items += '<div class="gal-item"><div class="gal-ph"><span class="mono">'
+          + DATOS.nombre.charAt(0) + '</span><span class="t">Tu foto aquí</span></div></div>';
+      }
+    }
+    track.innerHTML = items + items; // duplicado para loop continuo
+  })();
+
+  /* ---- Partículas doradas ---- */
+  (function(){
+    const box = $('#particles');
+    for(let i=0;i<14;i++){
+      const s=document.createElement('span');
+      s.className='spark';
+      s.style.left=Math.random()*100+'%';
+      s.style.animationDuration=(6+Math.random()*7)+'s';
+      s.style.animationDelay=(Math.random()*8)+'s';
+      const sz=(3+Math.random()*5); s.style.width=sz+'px'; s.style.height=sz+'px';
+      box.appendChild(s);
+    }
+  })();
+
+  /* ============================ INTRO / VIDEO / MÚSICA ==================== */
+  const intro=$('#intro'), cover=$('#cover'), video=$('#video'), tapBtn=$('#tapBtn');
+  const hero=$('#hero'), musicBtn=$('#musicBtn');
+  let revealed=false, fallbackTimer=null;
+
+  function playMusic(){
+    audio.play().then(()=>{
+      musicBtn.style.display='flex';
+      musicBtn.classList.add('spin');
+    }).catch(()=>{ /* si no hay archivo aún, no pasa nada */
+      musicBtn.style.display='flex';
+    });
+  }
+  musicBtn.addEventListener('click', ()=>{
+    if(audio.paused){ audio.play(); musicBtn.classList.add('spin'); musicBtn.style.opacity=1; }
+    else { audio.pause(); musicBtn.classList.remove('spin'); musicBtn.style.opacity=.55; }
+  });
+
+  function reveal(){
+    if(revealed) return; revealed=true;
+    clearTimeout(fallbackTimer);
+    intro.classList.add('hide');
+    setTimeout(()=>{ intro.style.display='none'; }, 850);
+    document.body.classList.remove('locked');
+    hero.classList.add('show');
+    startCountdown();
+    startObservers();
+    startParallax();
+  }
+
+  function startVideo(){
+    // arranca música con el mismo toque
+    playMusic();
+    // oculta la portada
+    cover.classList.add('hide');
+    // respaldo por duración (por si 'ended' no dispara)
+    const setFallback = ()=>{
+      clearTimeout(fallbackTimer);
+      const dur = (video.duration && isFinite(video.duration)) ? video.duration*1000 : DATOS.videoFallbackMs;
+      fallbackTimer = setTimeout(reveal, dur + 1200);
+    };
+    if(video.readyState>=1) setFallback();
+    else video.addEventListener('loadedmetadata', setFallback, {once:true});
+
+    // intenta reproducir el video
+    video.currentTime=0;
+    const p=video.play();
+    if(p && p.catch){
+      p.catch(()=>{ /* si el navegador bloquea, revelamos igual tras un momento */
+        fallbackTimer=setTimeout(reveal, 1200);
+      });
+    }
+  }
+
+  // Cuando el video termina -> congela (mantiene último frame) y revela
+  video.addEventListener('ended', reveal);
+  video.addEventListener('error', ()=> setTimeout(reveal, 400));
+
+  // El toque inicial: en el botón o en cualquier parte de la portada
+  tapBtn.addEventListener('click', e=>{ e.stopPropagation(); startVideo(); });
+  cover.addEventListener('click', startVideo);
+
+  /* ============================ CUENTA REGRESIVA ======================== */
+  let cdInt=null;
+  function startCountdown(){
+    const target=new Date(DATOS.fechaISO).getTime();
+    const d=$('#cd-d'), h=$('#cd-h'), m=$('#cd-m'), s=$('#cd-s');
+    function tick(){
+      const diff=target-Date.now();
+      if(diff<=0){
+        $('#countdown').innerHTML='<div class="box" style="max-width:none"><div class="n">¡Hoy es el gran día!</div></div>';
+        clearInterval(cdInt); return;
+      }
+      const dd=Math.floor(diff/86400000);
+      const hh=Math.floor(diff%86400000/3600000);
+      const mm=Math.floor(diff%3600000/60000);
+      const ss=Math.floor(diff%60000/1000);
+      d.textContent=dd; h.textContent=String(hh).padStart(2,'0');
+      m.textContent=String(mm).padStart(2,'0'); s.textContent=String(ss).padStart(2,'0');
+    }
+    tick(); cdInt=setInterval(tick,1000);
+  }
+
+  /* ============================ SCROLL REVEAL =========================== */
+  function startObservers(){
+    const io=new IntersectionObserver((es)=>{
+      es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+    },{threshold:.18});
+    $$('.reveal').forEach(el=>io.observe(el));
+  }
+
+  /* ============================ PARALLAX LEVE =========================== */
+  function startParallax(){
+    const bg=$('#heroBg');
+    window.addEventListener('scroll', ()=>{
+      const y=window.scrollY;
+      if(y<window.innerHeight){ bg.style.transform='translateY('+(y*0.28)+'px) scale(1.08)'; }
+    }, {passive:true});
+  }
+
+  /* ============================ FORMULARIO RSVP ========================= */
+  let asistir=null;
+  const cantBlock=$('#cantidadBlock');
+  $$('.attend-btn').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      $$('.attend-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      asistir=b.dataset.val;
+      if(asistir==='si') cantBlock.classList.add('open');
+      else cantBlock.classList.remove('open');
+    });
+  });
+
+  const cont={adultos:1, ninos:0};
+  $$('.step-btn').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const t=b.dataset.t, a=parseInt(b.dataset.a,10);
+      const min = (t==='adultos')?0:0;
+      cont[t]=Math.max(min, cont[t]+a);
+      $('#v'+t.charAt(0).toUpperCase()+t.slice(1)).textContent=cont[t];
+    });
+  });
+
+  $('#enviarBtn').addEventListener('click', ()=>{
+    const nombre=$('#fNombre').value.trim();
+    if(!nombre){ alert('Por favor escribe tu nombre.'); $('#fNombre').focus(); return; }
+    if(asistir===null){ alert('Por favor indica si podrás asistir.'); return; }
+
+    const tel=DATOS.whatsapp.replace(/\D/g,'');
+    let msg;
+    if(asistir==='si'){
+      const total=cont.adultos+cont.ninos;
+      if(total<1){ alert('Indica cuántas personas asistirán.'); return; }
+      msg='¡Hola! 💛 Confirmo mi asistencia a los XV años de '+DATOS.nombre+'.\n\n'
+        +'👤 Nombre: '+nombre+'\n'
+        +'✅ Asistiré: Sí\n'
+        +'🥂 Adultos: '+cont.adultos+'\n'
+        +'🧒 Niños: '+cont.ninos+'\n'
+        +'👥 Total: '+total+'\n\n'
+        +'📅 '+DATOS.fechaDia+' de '+DATOS.fechaMes+' '+DATOS.fechaAnio+' · '+DATOS.hora+'\n'
+        +'📍 '+DATOS.lugar+'\n\n¡Nos vemos ahí! ✨';
+    }else{
+      msg='¡Hola! 💛 Soy '+nombre+'.\n\n'
+        +'Lamento mucho no poder acompañar a '+DATOS.nombre+' en sus XV años. '
+        +'Les deseo una noche mágica e inolvidable. ✨';
+    }
+    window.open('https://wa.me/'+tel+'?text='+encodeURIComponent(msg), '_blank');
+  });
+
+})();
+</script>
+</body>
+</html>
