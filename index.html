@@ -91,7 +91,7 @@ button{font-family:inherit;cursor:pointer}
   text-align:center; padding:2rem;
   background:
     linear-gradient(180deg, rgba(128,64,31,.45), rgba(128,64,31,.30) 45%, rgba(128,64,31,.65)),
-    center/cover no-repeat url('imagen fija heros.png');
+    center/cover no-repeat url('hero.png');
   transition:opacity .7s ease;
 }
 #cover.hide{opacity:0; pointer-events:none}
@@ -133,7 +133,7 @@ button{font-family:inherit;cursor:pointer}
 .hero{position:relative; height:100dvh; overflow:hidden}
 .hero-bg{
   position:absolute; inset:-4% 0;
-  background:center/cover no-repeat url('imagen fija heros.png');
+  background:center/cover no-repeat url('hero.png');
   will-change:transform;
 }
 .hero-scrim{
@@ -360,7 +360,7 @@ button{font-family:inherit;cursor:pointer}
   <div id="intro">
     <div class="intro-inner">
       <video id="video" muted playsinline preload="auto">
-        <source src="video abertura.mp4" type="video/mp4">
+        <source src="video-apertura.mp4" type="video/mp4">
       </video>
       <div id="cover">
         <div class="cover-sello">
@@ -530,7 +530,7 @@ const DATOS = {
   whatsapp:  "+55 81 9138-5629",
 
   /* --- Música (coloca el archivo .mp3 en esta misma carpeta) --- */
-  musica:    "HUMBE - fantasmas.mp3",
+  musica:    "musica.mp3",
 
   /* --- Galería de fotos (carrusel). Coloca las fotos en la carpeta y escribe
          sus nombres aquí, ej.: ["foto1.jpg","foto2.jpg"]. Si lo dejas vacío []
