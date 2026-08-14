@@ -358,6 +358,24 @@ button{font-family:inherit;cursor:pointer}
 }
 
 /* ============================================================
+   BARRA DE CONTACTO (mini sección final)
+   ============================================================ */
+.promo{
+  background:var(--marfil); color:var(--cafe);
+  text-align:center; padding:.9rem 1rem;
+  display:flex; flex-wrap:wrap; gap:.15rem .5rem; align-items:center; justify-content:center;
+  font-size:.72rem; letter-spacing:.02em; line-height:1.4;
+  border-top:1px solid rgba(198,154,99,.4);
+}
+.promo-txt{opacity:.75}
+.promo-link{
+  color:var(--terracota); font-weight:600; text-decoration:none;
+  border-bottom:1px solid var(--dorado); padding-bottom:1px;
+  transition:color .25s;
+}
+.promo-link:hover{color:var(--cafe)}
+
+/* ============================================================
    BOTÓN DE MÚSICA (fijo)
    ============================================================ */
 #musicBtn{
@@ -535,6 +553,12 @@ button{font-family:inherit;cursor:pointer}
     <img class="mask-float mask-small reveal" src="antifas.png" alt="Antifaz">
   </section>
 
+  <!-- ===================== BARRA DE CONTACTO (mini) ===================== -->
+  <div class="promo">
+    <span class="promo-txt" data-k="contactoFrase"></span>
+    <a class="promo-link" id="contactoBtn" target="_blank" rel="noopener" data-k="contactoLink"></a>
+  </div>
+
   <!-- Overlay de confirmación (mensaje + destellos dorados) -->
   <div id="confirmOverlay">
     <div class="confirm-sparks left" id="sparksL"></div>
@@ -582,8 +606,17 @@ const DATOS = {
   direccion: "Calle Tucumán, Av. Beni #55",
   mapsUrl:   "https://maps.app.goo.gl/yHtbmzSKFWQU3BYGA",
 
-  /* --- WhatsApp (con código de país; se limpian espacios y símbolos solos) --- */
+  /* --- WhatsApp de CONFIRMACIÓN de asistencia (con código de país; se limpian
+         espacios y símbolos solos). Este es el que cambiarás por el de la familia. --- */
   whatsapp:  "+55 81 9138-5629",
+
+  /* --- WhatsApp de CONTACTO (barra final "¿Quieres una invitación como esta?").
+         ⚠️ Es INDEPENDIENTE del de confirmación: es TU número. Si cambias el de
+         arriba, ESTE se queda igual. --- */
+  whatsappContacto: "+55 81 9138-5629",
+  contactoFrase: "¿Quieres una invitación como esta?",
+  contactoLink:  "Entrar en contacto",
+  contactoMsg:   "Hola 💛 Vi la invitación de XV de Luciana y me gustaría saber más sobre las invitaciones digitales. ¿Me podrías dar más información?",
 
   /* --- Música (coloca el archivo .mp3 en esta misma carpeta) --- */
   musica:    "musica.mp3",
@@ -619,6 +652,12 @@ const DATOS = {
   });
   const audio = $('#audio');
   audio.src = DATOS.musica;
+
+  /* ---- Link de contacto (barra final, tu WhatsApp) ---- */
+  (function(){
+    const tel=DATOS.whatsappContacto.replace(/\D/g,'');
+    $('#contactoBtn').href='https://wa.me/'+tel+'?text='+encodeURIComponent(DATOS.contactoMsg);
+  })();
 
   /* ---- Botones de Maps / Calendario ---- */
   $('#mapsBtn').href = DATOS.mapsUrl;
