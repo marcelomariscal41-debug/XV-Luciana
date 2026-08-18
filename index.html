@@ -340,6 +340,20 @@ button{font-family:inherit;cursor:pointer}
 .sw-rosa{background:linear-gradient(135deg,#F2CDBB,#E8B49D)}
 .sw-crema{background:linear-gradient(135deg,#FBF4EA,#F3E7D6)}
 
+/* ---- Itinerario de la noche ---- */
+.itin{max-width:23rem; margin:1.9rem auto 0; text-align:left}
+.itin-item{display:flex; align-items:stretch; gap:.9rem}
+.itin-time{flex:0 0 4.2rem; text-align:right; font-family:var(--f-titulo); font-weight:600;
+  font-size:1.4rem; color:var(--terracota); line-height:1.15; padding-top:.05rem}
+.itin-mark{position:relative; flex:0 0 auto; display:flex; flex-direction:column; align-items:center}
+.itin-mark .dot{width:11px; height:11px; border:1px solid var(--dorado); background:var(--marfil);
+  transform:rotate(45deg); margin-top:.4rem; flex:none; z-index:1}
+.itin-mark .ln{width:1px; flex:1; background:var(--dorado); opacity:.55; margin-top:.2rem}
+.itin-item:last-child .itin-mark .ln{display:none}
+.itin-label{flex:1; padding:.35rem 0 1.5rem; font-size:.78rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--cafe); line-height:1.4}
+.itin-item:last-child .itin-label{padding-bottom:0}
+
 /* ---- Imagen del contador (falta poco) ---- */
 .fp-img{width:100%; max-width:27rem; margin:2rem auto 0;
   filter:drop-shadow(0 12px 24px rgba(128,64,31,.4)); animation:floatY 4.2s ease-in-out infinite}
@@ -527,7 +541,7 @@ button{font-family:inherit;cursor:pointer}
   <!-- ===================== DRESS CODE ===================== -->
   <section class="sec">
     <p class="eyebrow reveal">Código de vestimenta</p>
-    <div class="dc-title reveal">Elegante</div>
+    <div class="dc-title reveal">Formal</div>
     <img class="dc-img reveal" src="dress-code.png" alt="Dress code elegante">
     <div class="divisor reveal"><span class="line"></span><span class="dia"></span><span class="line"></span></div>
     <p class="dc-note reveal">Colores reservados para la quinceañera</p>
@@ -536,6 +550,13 @@ button{font-family:inherit;cursor:pointer}
       <span class="dc-color"><span class="sw sw-rosa"></span>Rosa</span>
       <span class="dc-color"><span class="sw sw-crema"></span>Crema</span>
     </div>
+  </section>
+
+  <!-- ===================== ITINERARIO ===================== -->
+  <section class="sec alt">
+    <p class="eyebrow reveal">Programa</p>
+    <div class="titulo reveal">Itinerario de la noche</div>
+    <div class="itin reveal" id="itin"></div>
   </section>
 
   <!-- ===================== RSVP ===================== -->
@@ -630,12 +651,12 @@ const DATOS = {
   fraseFinal: "¡Te esperamos!",
 
   /* --- Fecha y hora --- */
-  fechaDia:  "02",                         // Número del día (grande)
+  fechaDia:  "09",                         // Número del día (grande)
   fechaMes:  "Octubre",                    // Mes en texto
   fechaAnio: "2026",                       // Año
   hora:      "19:30 hrs",                  // Hora en texto
   // Fecha/hora EXACTA para la cuenta regresiva (formato: AÑO-MES-DÍAThora:min:seg)
-  fechaISO:  "2026-10-02T19:30:00",
+  fechaISO:  "2026-10-09T19:30:00",
 
   /* --- Ubicación --- */
   lugar:     "Salón Emperador",
@@ -656,6 +677,17 @@ const DATOS = {
 
   /* --- Música (coloca el archivo .mp3 en esta misma carpeta) --- */
   musica:    "musica.mp3",
+
+  /* --- Itinerario de la noche (hora + evento). Añade, quita o edita libremente. --- */
+  itinerario: [
+    { hora:"19:30", evento:"Recepción de invitados" },
+    { hora:"21:00", evento:"Entrada de la quinceañera" },
+    { hora:"21:25", evento:"Vals" },
+    { hora:"21:30", evento:"Brindis" },
+    { hora:"22:00", evento:"Cena" },
+    { hora:"22:30", evento:"Sesión de fotos" },
+    { hora:"23:00", evento:"Baile" }
+  ],
 
   /* --- Galería de fotos (carrusel). Coloca las fotos en la carpeta y escribe
          sus nombres aquí, ej.: ["foto1.jpg","foto2.jpg"]. Si lo dejas vacío []
@@ -722,6 +754,17 @@ const DATOS = {
       unidad.forEach(w=>{ html += '<span class="it">'+w+'</span><span class="sep">&#10022;</span>'; });
     }
     track.innerHTML = html + html; // duplicado para loop continuo
+  })();
+
+  /* ---- Itinerario de la noche ---- */
+  (function(){
+    const c=$('#itin'); if(!c || !DATOS.itinerario) return;
+    c.innerHTML=DATOS.itinerario.map(it=>
+      '<div class="itin-item">'
+      +'<div class="itin-time">'+it.hora+'</div>'
+      +'<div class="itin-mark"><span class="dot"></span><span class="ln"></span></div>'
+      +'<div class="itin-label">'+it.evento+'</div>'
+      +'</div>').join('');
   })();
 
   /* ---- Partículas doradas ---- */
