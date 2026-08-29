@@ -647,7 +647,7 @@ const DATOS = {
   introPre: "Mis quince años",             // Frase corta sobre el nombre (portada/hero)
 
   /* --- Textos --- */
-  fraseInvitacion: "Con la bendición de Dios, gracias a mis padres por darme la vida y a mi hermano por hacer realidad el sueño que desde chiquita anhelé con todo mi corazón, los invito a <em>celebrar conmigo este momento</em>.",
+  fraseInvitacion: "Con la bendición de Dios, gracias a mis padres por darme la vida y a mi hermano por hacer realidad el sueño que desde chiquita anhelé con todo mi corazón, los invito a celebrar conmigo este momento.",
   fraseFinal: "¡Te esperamos!",
 
   /* --- Fecha y hora --- */
@@ -761,7 +761,6 @@ const DATOS = {
     const c=$('#itin'); if(!c || !DATOS.itinerario) return;
     c.innerHTML=DATOS.itinerario.map(it=>
       '<div class="itin-item">'
-      +'<div class="itin-time">'+it.hora+'</div>'
       +'<div class="itin-mark"><span class="dot"></span><span class="ln"></span></div>'
       +'<div class="itin-label">'+it.evento+'</div>'
       +'</div>').join('');
